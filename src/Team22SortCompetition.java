@@ -1,28 +1,35 @@
 public class Team22SortCompetition {
 
-    public static void main(String[]args)
-    {
-        int[] challengeOne = generateIntArr(10000,10000);
+    public static void main(String[] args) {
+        int[] challengeOne = generateIntArr(10000, 10000);
         long start = System.nanoTime();
-        insertionSort(challengeOne);
+        countingSort(challengeOne);
         long end = System.nanoTime();
         long time = end - start;
-        System.out.println(time);
         System.out.println("ChallengeOne took " + (time / 1000) + " Microseconds");
-        System.out.println("Sorted Int Array \n" + java.util.Arrays.toString(challengeOne));
-        System.out.println("Median of ChallengeOne: " +getSortedMedian(challengeOne));
+        System.out.println("Sorted Int Array " + java.util.Arrays.toString(challengeOne));
+        System.out.println("Median of ChallengeOne: " + getSortedMedian(challengeOne));
+
+//        String[] challengeTwo = randomStringArr(10000, 5);
+//        start = System.nanoTime();
+//        bubbleSort(challengeTwo);
+//        end = System.nanoTime();
+//        time = end - start;
+//        System.out.println(time);
+//        System.out.println(java.util.Arrays.toString(challengeTwo));
+
     }
 
 
-    public static int getSortedMedian(int[] array) {
+    public static double getSortedMedian(int[] array) {
         int length = array.length;
         if (length % 2 == 0) {
             int medPos = length / 2;
-            return array[medPos];
+            int medPos2 = length / 2 - 1;
+            return (double) (array[medPos] + array[medPos2]) / 2;
         } else {
             int medPos = length / 2;
-            int medPos2 = length / 2 - 1;
-            return (array[medPos] + array[medPos2]) / 2;
+            return array[medPos];
         }
     }
 
@@ -88,6 +95,26 @@ public class Team22SortCompetition {
             arr[count] = s;
         }
         return arr;
+    }
+
+    public static int[] countingSort(int[] numbers) {
+        int max = numbers[0];
+        for (int i=1;i<numbers.length;i++) {
+            if (numbers[i]> max)
+                max = numbers[i];
+        }
+        int[] newsortedNumbers = new int[max + 1];
+        for (int i=0;i<numbers.length; i++) {
+            newsortedNumbers[numbers[i]]++;
+        }
+        int insertPosition = 0;
+        for (int i=0;i<= max;i++) {
+            for (int j = 0; j < newsortedNumbers[i]; j++) {
+                numbers[insertPosition]=i;
+                insertPosition++;
+            }
+        }
+        return numbers;
     }
 
     /**
